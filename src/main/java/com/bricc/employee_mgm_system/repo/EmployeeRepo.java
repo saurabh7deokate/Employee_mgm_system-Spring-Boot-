@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import com.bricc.employee_mgm_system.dto.Employee;
+import com.bricc.employee_mgm_system.util.ResponseStructure;
 
 public interface EmployeeRepo extends JpaRepository<Employee, Integer> {
 

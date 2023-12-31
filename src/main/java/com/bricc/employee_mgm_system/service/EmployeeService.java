@@ -1,6 +1,6 @@
 package com.bricc.employee_mgm_system.service;
 
-import java.util.List;
+import java.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,7 @@ public class EmployeeService {
 	@Autowired
 	private EmployeeDao employeeDao;
 
-	public static void saveGrade(Employee employee) {
+	private static void saveGrade(Employee employee) {
 
 		if (employee.getSalary() < 10000 && employee.getSalary() >= 0) {
 
@@ -34,146 +34,154 @@ public class EmployeeService {
 		}
 	}
 
+	private static <T> ResponseStructure<T> setResponseStucture(String message, Integer status, T data) {
+	    ResponseStructure<T> responseStructure = new ResponseStructure<>();
+	    responseStructure.setMessage(message);
+	    responseStructure.setStatus(status);
+	    responseStructure.setData(data);
+	    return responseStructure;
+	}
+
+
 	public ResponseStructure<Employee> saveEmployee(Employee employee) {
 
 		EmployeeService.saveGrade(employee);
 
-		ResponseStructure<Employee> responseStructure = new ResponseStructure<Employee>();
-		responseStructure.setMessage("Data Saved Succesfully");
-		responseStructure.setStatus(HttpStatus.CREATED.value());
-		responseStructure.setData(employeeDao.saveEmployee(employee));
-
+		ResponseStructure<Employee> responseStructure = 
+		setResponseStucture("Data Saved Successfully", HttpStatus.CREATED.value(), employeeDao.saveEmployee(employee));
 		return responseStructure;
 	}
 
-	public List<Employee> saveAllEmployees(List<Employee> employees) {
-
+	public ResponseStructure<List<Employee>> saveAllEmployees(List<Employee> employees) {
 		for (Employee employee : employees) {
 			saveEmployee(employee);
 		}
-		return employees;
+		return setResponseStucture("All Data Saved Successfully", HttpStatus.CREATED.value(), employees);
 	}
 
 	public ResponseStructure<Employee> fetchEmployee(Integer id) {
-
-		ResponseStructure<Employee> responseStructure = new ResponseStructure<>();
-
 		if (employeeDao.fetchEmployee(id) != null) {
-			responseStructure.setMessage("Data Found Succesfully");
-			responseStructure.setStatus(HttpStatus.FOUND.value());
-			responseStructure.setData(employeeDao.fetchEmployee(id));
-			return responseStructure;
+			return setResponseStucture("Data Found Successfully", HttpStatus.FOUND.value(), employeeDao.fetchEmployee(id));
 		}
-		responseStructure.setMessage("Data Not Found");
-		responseStructure.setStatus(HttpStatus.NOT_FOUND.value());
-		responseStructure.setData(employeeDao.fetchEmployee(id));
-		return responseStructure;
+		return setResponseStucture("Data Not Found", HttpStatus.NOT_FOUND.value(), employeeDao.fetchEmployee(id));
 	}
 
 	public ResponseStructure<List<Employee>> fetchAllEmployee() {
-
-		ResponseStructure<List<Employee>> responseStructure = new ResponseStructure<>();
 		if (!employeeDao.fetchAllEmployee().isEmpty()) {
-			responseStructure.setMessage("Data Found Succesfully");
-			responseStructure.setStatus(HttpStatus.FOUND.value());
-			responseStructure.setData(employeeDao.fetchAllEmployee());
-			return responseStructure;
+			return setResponseStucture("Data Found Successfully", HttpStatus.FOUND.value(), employeeDao.fetchAllEmployee());
 		}
-		responseStructure.setMessage("Data Not Found");
-		responseStructure.setStatus(HttpStatus.NOT_FOUND.value());
-		responseStructure.setData(employeeDao.fetchAllEmployee());
-		return responseStructure;
+		return setResponseStucture("Data Not Found", HttpStatus.NOT_FOUND.value(), employeeDao.fetchAllEmployee());
 	}
 
-	public Employee deleteEmployee(Integer id) {
-
+	public ResponseStructure<Employee> deleteEmployee(Integer id) {
 		Employee employee = employeeDao.fetchEmployee(id);
-
 		if (employee != null) {
-			return employeeDao.deleteEmployee(employee);
+			return setResponseStucture("Data Deleted Successfully", HttpStatus.FOUND.value(),
+					employeeDao.deleteEmployee(employee));
 		}
-		return null;
+		setResponseStucture("Id Not Found", HttpStatus.NOT_FOUND.value(), employee);
+		return setResponseStucture("Data Deleted Successfully", HttpStatus.FOUND.value(),
+				employeeDao.deleteEmployee(employee));
 	}
 
 	public ResponseStructure<Employee> updateEmployee(Integer id, Employee employee) {
-
 		Employee dBEmployee = employeeDao.fetchEmployee(id);
-
 		if (dBEmployee != null) {
 			employee.setId(id);
-			return saveEmployee(employee);
+			saveEmployee(employee);
+			return setResponseStucture("Data Updated Successfully", HttpStatus.CREATED.value(), employee);
 		}
-		return null;
+		return setResponseStucture("Id Not Found", HttpStatus.NOT_FOUND.value(), employee);
 	}
 
 	public ResponseStructure<Employee> updatePhone(Integer id, Long phone) {
-
 		Employee employee = employeeDao.fetchEmployee(id);
 		if (employee != null) {
 			employee.setPhone(phone);
-			return saveEmployee(employee);
+			saveEmployee(employee);
+			return setResponseStucture("Phone Updated Successfully", HttpStatus.CREATED.value(), employee);
 		}
-		return null;
+		return setResponseStucture("Id Not Found", HttpStatus.NOT_FOUND.value(), employee);
 	}
 
 	public ResponseStructure<Employee> updateEmail(Integer id, String email) {
-
 		Employee employee = employeeDao.fetchEmployee(id);
 		if (employee != null) {
 			employee.setEmail(email);
-			return saveEmployee(employee);
+			saveEmployee(employee);
+			return setResponseStucture("Email Updated Successfully", HttpStatus.CREATED.value(), employee);
 		}
-		return null;
+		return setResponseStucture("Id Not Found", HttpStatus.NOT_FOUND.value(), employee);
 	}
 
 	public ResponseStructure<Employee> updateSalary(Integer id, Double salary) {
-
 		Employee employee = employeeDao.fetchEmployee(id);
 		if (employee != null) {
 			employee.setSalary(salary);
-			return saveEmployee(employee);
+			saveEmployee(employee);
+			return setResponseStucture("Salary Updated Successfully", HttpStatus.CREATED.value(), employee);
 		}
-		return null;
+		return setResponseStucture("Id Not Found", HttpStatus.NOT_FOUND.value(), employee);
 	}
 
-	public Employee fetchByPhone(Long phone) {
-
-		return employeeDao.fetchByPhone(phone);
+	public ResponseStructure<Employee> fetchByPhone(Long phone) {
+		if (employeeDao.fetchByPhone(phone) != null) {
+			return setResponseStucture("Data Found Successfully", HttpStatus.FOUND.value(), employeeDao.fetchByPhone(phone));
+		}
+		return setResponseStucture("Phone Not Found", HttpStatus.NOT_FOUND.value(), employeeDao.fetchByPhone(phone));
 	}
 
-	public Employee getByEmail(String email) {
-
-		return employeeDao.getByEmail(email);
+	public ResponseStructure<Employee> getByEmail(String email) {
+		if (employeeDao.getByEmail(email) != null) {
+			return setResponseStucture("Data Found Successfully", HttpStatus.FOUND.value(), employeeDao.getByEmail(email));
+		}
+		return setResponseStucture("Email Not Found", HttpStatus.NOT_FOUND.value(), employeeDao.getByEmail(email));
 	}
 
-	public List<Employee> fetchByAddress(String address) {
-
-		return employeeDao.fetchByAddress(address);
+	public ResponseStructure<List<Employee>> fetchByAddress(String address) {
+		if (employeeDao.fetchByAddress(address) != null) {	
+			return setResponseStucture("Data Found Successfully", HttpStatus.FOUND.value(),
+					employeeDao.fetchByAddress(address));
+		}
+		return setResponseStucture("Address Not Found", HttpStatus.NOT_FOUND.value(), employeeDao.fetchByAddress(address));
 	}
 
-	public List<Employee> fetchByName(String name) {
-
-		return employeeDao.fetchByName(name);
+	public ResponseStructure<List<Employee>> fetchByName(String name) {
+		if (employeeDao.fetchByName(name) != null) {
+			return setResponseStucture("Data Found Successfully", HttpStatus.FOUND.value(), employeeDao.fetchByName(name));
+		}
+		return setResponseStucture("Name Not Found", HttpStatus.NOT_FOUND.value(), employeeDao.fetchByName(name));
 	}
 
-	public List<Employee> fetchBySalary(Double salary) {
-
-		return employeeDao.fetchBySalary(salary);
+	public ResponseStructure<List<Employee>> fetchBySalary(Double salary) {
+		if (employeeDao.fetchBySalary(salary) != null) {	
+			return setResponseStucture("Data Found Successfully", HttpStatus.FOUND.value(), employeeDao.fetchBySalary(salary));
+		}
+		return setResponseStucture("Salary Not Found", HttpStatus.NOT_FOUND.value(), employeeDao.fetchBySalary(salary));
 	}
 
-	public List<Employee> salLessThan(Double salary) {
-
-		return employeeDao.salLessThan(salary);
+	public ResponseStructure<List<Employee>> salLessThan(Double salary) {
+		if (employeeDao.salLessThan(salary) != null) {	
+			return setResponseStucture("Data Found Successfully", HttpStatus.FOUND.value(), employeeDao.salLessThan(salary));
+		}
+		return setResponseStucture("Salary Not Found", HttpStatus.NOT_FOUND.value(), employeeDao.salLessThan(salary));
 	}
 
-	public List<Employee> salBetween(Double lowSalary, Double highSalary) {
+	public ResponseStructure<List<Employee>> salBetween(Double lowSalary, Double highSalary) {
 
-		return employeeDao.salBetween(lowSalary, highSalary);
+		if (employeeDao.salBetween(lowSalary, highSalary) != null) {
+			return setResponseStucture("Data Found Successfully", HttpStatus.FOUND.value(),
+					employeeDao.salBetween(lowSalary, highSalary));
+		}
+		return setResponseStucture("Salary Not Found", HttpStatus.NOT_FOUND.value(),
+				employeeDao.salBetween(lowSalary, highSalary));
 	}
 
-	public List<Employee> fetchByGrade(Character grade) {
-
-		return employeeDao.fetchByGrade(grade);
+	public ResponseStructure<List<Employee>> fetchByGrade(Character grade) {
+		if (employeeDao.fetchByGrade(grade) != null) {
+			return setResponseStucture("Data Found Successfully", HttpStatus.FOUND.value(), employeeDao.fetchByGrade(grade));
+		}
+		return setResponseStucture("Grade Not Found", HttpStatus.NOT_FOUND.value(), employeeDao.fetchByGrade(grade));
 	}
 
 }

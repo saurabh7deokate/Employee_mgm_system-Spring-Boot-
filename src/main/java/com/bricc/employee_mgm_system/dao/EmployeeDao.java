@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.bricc.employee_mgm_system.dto.Employee;
 import com.bricc.employee_mgm_system.repo.EmployeeRepo;
+import com.bricc.employee_mgm_system.util.ResponseStructure;
 
 @Repository
 public class EmployeeDao {
@@ -128,7 +129,7 @@ public class EmployeeDao {
 	}
 
 	public List<Employee> fetchBySalary(Double salary) {
-		
+
 		return employeeRepo.findEmployeeByTheirSalary(salary);
 	}
 
@@ -143,7 +144,7 @@ public class EmployeeDao {
 	}
 
 	public List<Employee> fetchByGrade(Character grade) {
-		
+
 		return employeeRepo.findEmployeesByGrade(grade);
 	}
 }

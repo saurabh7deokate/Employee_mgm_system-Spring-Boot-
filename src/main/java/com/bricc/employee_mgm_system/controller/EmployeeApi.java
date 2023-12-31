@@ -33,7 +33,7 @@ public class EmployeeApi {
 	/* API-02 */
 
 	@PostMapping("/saveAll")
-	public List<Employee> saveAllEmployees(@RequestBody List<Employee> employees) {
+	public ResponseStructure<List<Employee>> saveAllEmployees(@RequestBody List<Employee> employees) {
 
 		return employeeService.saveAllEmployees(employees);
 	}
@@ -57,7 +57,7 @@ public class EmployeeApi {
 	/* API-05 */
 
 	@DeleteMapping("/delete/{id}")
-	public Employee deleteEmployee(@PathVariable Integer id) {
+	public ResponseStructure<Employee> deleteEmployee(@PathVariable Integer id) {
 		return employeeService.deleteEmployee(id);
 	}
 
@@ -96,7 +96,7 @@ public class EmployeeApi {
 	/* API-10 */
 
 	@GetMapping("/fetchByPhone")
-	public Employee fetchByPhone(@RequestParam Long phone) {
+	public ResponseStructure<Employee> fetchByPhone(@RequestParam Long phone) {
 
 		return employeeService.fetchByPhone(phone);
 	}
@@ -104,7 +104,7 @@ public class EmployeeApi {
 	/* API-11 */
 
 	@GetMapping("/getByEmail")
-	public Employee getByEmail(@RequestParam String email) {
+	public ResponseStructure<Employee> getByEmail(@RequestParam String email) {
 
 		return employeeService.getByEmail(email);
 	}
@@ -112,7 +112,7 @@ public class EmployeeApi {
 	/* API-12 */
 
 	@GetMapping("/fetchByAddress")
-	public List<Employee> fetchByAddress(@RequestParam String address) {
+	public ResponseStructure<List<Employee>> fetchByAddress(@RequestParam String address) {
 
 		return employeeService.fetchByAddress(address);
 	}
@@ -120,7 +120,7 @@ public class EmployeeApi {
 	/* API-13 */
 
 	@GetMapping("/fetchByName")
-	public List<Employee> fetchByName(@RequestParam String name) {
+	public ResponseStructure<List<Employee>> fetchByName(@RequestParam String name) {
 
 		return employeeService.fetchByName(name);
 	}
@@ -128,7 +128,7 @@ public class EmployeeApi {
 	/* API-14 */
 
 	@GetMapping("/fetchBySalary")
-	public List<Employee> fetchBySalary(@RequestParam Double salary) {
+	public ResponseStructure<List<Employee>> fetchBySalary(@RequestParam Double salary) {
 
 		return employeeService.fetchBySalary(salary);
 	}
@@ -136,7 +136,7 @@ public class EmployeeApi {
 	/* API-15 */
 
 	@GetMapping("/salLessThan")
-	public List<Employee> salLessThan(@RequestParam Double salary) {
+	public ResponseStructure<List<Employee>> salLessThan(@RequestParam Double salary) {
 
 		return employeeService.salLessThan(salary);
 	}
@@ -144,7 +144,8 @@ public class EmployeeApi {
 	/* API-16 */
 
 	@GetMapping("/salBetween")
-	public List<Employee> salBetween(@RequestParam Double lowSalary, @RequestParam Double highSalary) {
+	public ResponseStructure<List<Employee>> salBetween(@RequestParam Double lowSalary,
+			@RequestParam Double highSalary) {
 
 		return employeeService.salBetween(lowSalary, highSalary);
 	}
@@ -152,7 +153,7 @@ public class EmployeeApi {
 	/* API-17 */
 
 	@GetMapping("/fetchByGrade")
-	public List<Employee> fetchByGrade(@RequestParam Character grade) {
+	public ResponseStructure<List<Employee>> fetchByGrade(@RequestParam Character grade) {
 
 		return employeeService.fetchByGrade(grade);
 	}
