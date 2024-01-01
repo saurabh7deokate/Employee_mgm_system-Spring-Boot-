@@ -1,15 +1,11 @@
 package com.bricc.employee_mgm_system.dao;
 
 import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.bricc.employee_mgm_system.dto.Employee;
 import com.bricc.employee_mgm_system.repo.EmployeeRepo;
-import com.bricc.employee_mgm_system.util.ResponseStructure;
-
 @Repository
 public class EmployeeDao {
 
@@ -30,11 +26,7 @@ public class EmployeeDao {
 
 	public Employee fetchEmployee(Integer id) {
 
-		Optional<Employee> optional = employeeRepo.findById(id);
-		if (optional.isPresent()) {
-			return optional.get();
-		}
-		return null;
+		return employeeRepo.findById(id).orElse(null);
 
 		/* Alternate */
 
