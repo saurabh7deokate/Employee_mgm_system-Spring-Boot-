@@ -3,6 +3,7 @@ package com.bricc.employee_mgm_system.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -25,7 +26,7 @@ public class EmployeeApi {
 	/* API-01 */
 
 	@PostMapping("/save")
-	public ResponseStructure<Employee> saveEmployee(@RequestBody Employee employee) {
+	public ResponseEntity<ResponseStructure<Employee>> saveEmployee(@RequestBody Employee employee) {
 
 		return employeeService.saveEmployee(employee);
 	}
@@ -33,7 +34,7 @@ public class EmployeeApi {
 	/* API-02 */
 
 	@PostMapping("/saveAll")
-	public ResponseStructure<List<Employee>> saveAllEmployees(@RequestBody List<Employee> employees) {
+	public ResponseEntity<ResponseStructure<List<Employee>>> saveAllEmployees(@RequestBody List<Employee> employees) {
 
 		return employeeService.saveAllEmployees(employees);
 	}
@@ -41,7 +42,7 @@ public class EmployeeApi {
 	/* API-03 */
 
 	@GetMapping("/fetch")
-	public ResponseStructure<Employee> fetchEmployee(@RequestParam Integer id) {
+	public ResponseEntity<ResponseStructure<Employee>> fetchEmployee(@RequestParam Integer id) {
 
 		return employeeService.fetchEmployee(id);
 	}
@@ -49,7 +50,7 @@ public class EmployeeApi {
 	/* API-04 */
 
 	@GetMapping("/fetchAll")
-	public ResponseStructure<List<Employee>> fetchAllEmployee() {
+	public ResponseEntity<ResponseStructure<List<Employee>>> fetchAllEmployee() {
 
 		return employeeService.fetchAllEmployee();
 	}
@@ -57,14 +58,15 @@ public class EmployeeApi {
 	/* API-05 */
 
 	@DeleteMapping("/delete/{id}")
-	public ResponseStructure<Employee> deleteEmployee(@PathVariable Integer id) {
+	public ResponseEntity<ResponseStructure<Employee>> deleteEmployee(@PathVariable Integer id) {
 		return employeeService.deleteEmployee(id);
 	}
 
 	/* API-06 */
 
 	@PutMapping("/updateEmployee")
-	public ResponseStructure<Employee> updateEmployee(@RequestParam Integer id, @RequestBody Employee employee) {
+	public ResponseEntity<ResponseStructure<Employee>> updateEmployee(@RequestParam Integer id,
+			@RequestBody Employee employee) {
 
 		return employeeService.updateEmployee(id, employee);
 	}
@@ -72,7 +74,7 @@ public class EmployeeApi {
 	/* API-07 */
 
 	@PatchMapping("/updatePhone")
-	public ResponseStructure<Employee> updatePhone(@RequestParam Integer id, @RequestParam Long phone) {
+	public ResponseEntity<ResponseStructure<Employee>> updatePhone(@RequestParam Integer id, @RequestParam Long phone) {
 
 		return employeeService.updatePhone(id, phone);
 	}
@@ -80,7 +82,8 @@ public class EmployeeApi {
 	/* API-08 */
 
 	@PatchMapping("/updateEmail")
-	public ResponseStructure<Employee> updateEmail(@RequestParam Integer id, @RequestParam String email) {
+	public ResponseEntity<ResponseStructure<Employee>> updateEmail(@RequestParam Integer id,
+			@RequestParam String email) {
 
 		return employeeService.updateEmail(id, email);
 	}
@@ -88,7 +91,8 @@ public class EmployeeApi {
 	/* API-09 */
 
 	@PatchMapping("/updateSalary")
-	public ResponseStructure<Employee> updateSalary(@RequestParam Integer id, @RequestParam Double salary) {
+	public ResponseEntity<ResponseStructure<Employee>> updateSalary(@RequestParam Integer id,
+			@RequestParam Double salary) {
 
 		return employeeService.updateSalary(id, salary);
 	}
@@ -96,7 +100,7 @@ public class EmployeeApi {
 	/* API-10 */
 
 	@GetMapping("/fetchByPhone")
-	public ResponseStructure<Employee> fetchByPhone(@RequestParam Long phone) {
+	public ResponseEntity<ResponseStructure<Employee>> fetchByPhone(@RequestParam Long phone) {
 
 		return employeeService.fetchByPhone(phone);
 	}
@@ -104,7 +108,7 @@ public class EmployeeApi {
 	/* API-11 */
 
 	@GetMapping("/getByEmail")
-	public ResponseStructure<Employee> getByEmail(@RequestParam String email) {
+	public ResponseEntity<ResponseStructure<Employee>> getByEmail(@RequestParam String email) {
 
 		return employeeService.getByEmail(email);
 	}
@@ -112,7 +116,7 @@ public class EmployeeApi {
 	/* API-12 */
 
 	@GetMapping("/fetchByAddress")
-	public ResponseStructure<List<Employee>> fetchByAddress(@RequestParam String address) {
+	public ResponseEntity<ResponseStructure<List<Employee>>> fetchByAddress(@RequestParam String address) {
 
 		return employeeService.fetchByAddress(address);
 	}
@@ -120,7 +124,7 @@ public class EmployeeApi {
 	/* API-13 */
 
 	@GetMapping("/fetchByName")
-	public ResponseStructure<List<Employee>> fetchByName(@RequestParam String name) {
+	public ResponseEntity<ResponseStructure<List<Employee>>> fetchByName(@RequestParam String name) {
 
 		return employeeService.fetchByName(name);
 	}
@@ -128,7 +132,7 @@ public class EmployeeApi {
 	/* API-14 */
 
 	@GetMapping("/fetchBySalary")
-	public ResponseStructure<List<Employee>> fetchBySalary(@RequestParam Double salary) {
+	public ResponseEntity<ResponseStructure<List<Employee>>> fetchBySalary(@RequestParam Double salary) {
 
 		return employeeService.fetchBySalary(salary);
 	}
@@ -136,7 +140,7 @@ public class EmployeeApi {
 	/* API-15 */
 
 	@GetMapping("/salLessThan")
-	public ResponseStructure<List<Employee>> salLessThan(@RequestParam Double salary) {
+	public ResponseEntity<ResponseStructure<List<Employee>>> salLessThan(@RequestParam Double salary) {
 
 		return employeeService.salLessThan(salary);
 	}
@@ -144,7 +148,7 @@ public class EmployeeApi {
 	/* API-16 */
 
 	@GetMapping("/salBetween")
-	public ResponseStructure<List<Employee>> salBetween(@RequestParam Double lowSalary,
+	public ResponseEntity<ResponseStructure<List<Employee>>> salBetween(@RequestParam Double lowSalary,
 			@RequestParam Double highSalary) {
 
 		return employeeService.salBetween(lowSalary, highSalary);
@@ -153,7 +157,7 @@ public class EmployeeApi {
 	/* API-17 */
 
 	@GetMapping("/fetchByGrade")
-	public ResponseStructure<List<Employee>> fetchByGrade(@RequestParam Character grade) {
+	public ResponseEntity<ResponseStructure<List<Employee>>> fetchByGrade(@RequestParam Character grade) {
 
 		return employeeService.fetchByGrade(grade);
 	}
