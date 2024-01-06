@@ -11,7 +11,6 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import lombok.val;
 
 @Entity
 @Data
@@ -35,12 +34,12 @@ public class Employee {
 	private String address;
 
 	@Column(unique = true)
-	@Email(regexp = "[a-z0-9._%-]+@[a-z0-9.-]+\\.[a-z]{2,4}", message = "Invalid EMail")
+	@Email(regexp = "[a-z0-9._%-]+@[a-z0-9.-]+\\.[a-z]{2,4}", message = "Invalid Email")
 	@NotBlank(message = "Email is mandatory")
 	@NotNull(message = "Email Cannot be null")
 	private String email;
 
-	@Min(value = 0)
+	@Min(value = 1)
 	private Double salary;
 
 	private Character grade;

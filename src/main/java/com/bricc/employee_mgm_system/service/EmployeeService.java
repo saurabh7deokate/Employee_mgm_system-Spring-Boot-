@@ -25,12 +25,15 @@ public class EmployeeService {
 
 	}
 
-	public ResponseEntity<ResponseStructure<Employee>> saveEmployee(Employee employee) {
-
+	public static void saveGarde(Employee employee) {
 		Double salary = employee.getSalary();
 		Character grade = (salary < 10000) ? 'D' : (salary < 20000) ? 'C' : (salary < 40000) ? 'B' : 'A';
 		employee.setGrade(grade);
+	}
 
+	public ResponseEntity<ResponseStructure<Employee>> saveEmployee(Employee employee) {
+
+		EmployeeService.saveGarde(employee);
 		return setResponse("Data Saved Successfully", HttpStatus.CREATED, employeeDao.saveEmployee(employee));
 	}
 
@@ -61,7 +64,7 @@ public class EmployeeService {
 		if (employee != null) {
 			return setResponse("Data Deleted Successfully", HttpStatus.OK, employeeDao.deleteEmployee(employee));
 		} else {
-			throw new IdNotFoundException("ID Not found to Delete The Employee");
+			throw new IdNotFoundException("Id Not Found to delete the employee");
 		}
 
 	}

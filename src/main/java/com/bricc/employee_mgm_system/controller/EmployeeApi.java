@@ -11,13 +11,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.bricc.employee_mgm_system.dto.Employee;
 import com.bricc.employee_mgm_system.service.EmployeeService;
 import com.bricc.employee_mgm_system.util.ResponseStructure;
 
+import jakarta.validation.Valid;
+
 @RestController
+@RequestMapping("/employee")
 public class EmployeeApi {
 
 	@Autowired
@@ -25,15 +29,15 @@ public class EmployeeApi {
 
 	/* API-01 */
 
-	@PostMapping("/save")
-	public ResponseEntity<ResponseStructure<Employee>> saveEmployee(@RequestBody Employee employee) {
+	@PostMapping
+	public ResponseEntity<ResponseStructure<Employee>> saveEmployee(@Valid @RequestBody Employee employee) {
 
 		return employeeService.saveEmployee(employee);
 	}
 
 	/* API-02 */
 
-	@PostMapping("/saveAll")
+	@PostMapping("/save-all")
 	public ResponseEntity<ResponseStructure<List<Employee>>> saveAllEmployees(@RequestBody List<Employee> employees) {
 
 		return employeeService.saveAllEmployees(employees);
@@ -41,7 +45,7 @@ public class EmployeeApi {
 
 	/* API-03 */
 
-	@GetMapping("/fetch")
+	@GetMapping
 	public ResponseEntity<ResponseStructure<Employee>> fetchEmployee(@RequestParam Integer id) {
 
 		return employeeService.fetchEmployee(id);
@@ -49,7 +53,7 @@ public class EmployeeApi {
 
 	/* API-04 */
 
-	@GetMapping("/fetchAll")
+	@GetMapping("/fetch-all")
 	public ResponseEntity<ResponseStructure<List<Employee>>> fetchAllEmployee() {
 
 		return employeeService.fetchAllEmployee();
@@ -57,14 +61,14 @@ public class EmployeeApi {
 
 	/* API-05 */
 
-	@DeleteMapping("/delete/{id}")
+	@DeleteMapping("/{id}")
 	public ResponseEntity<ResponseStructure<Employee>> deleteEmployee(@PathVariable Integer id) {
 		return employeeService.deleteEmployee(id);
 	}
 
 	/* API-06 */
 
-	@PutMapping("/updateEmployee")
+	@PutMapping
 	public ResponseEntity<ResponseStructure<Employee>> updateEmployee(@RequestParam Integer id,
 			@RequestBody Employee employee) {
 
@@ -73,7 +77,7 @@ public class EmployeeApi {
 
 	/* API-07 */
 
-	@PatchMapping("/updatePhone")
+	@PatchMapping("/phone")
 	public ResponseEntity<ResponseStructure<Employee>> updatePhone(@RequestParam Integer id, @RequestParam Long phone) {
 
 		return employeeService.updatePhone(id, phone);
@@ -81,7 +85,7 @@ public class EmployeeApi {
 
 	/* API-08 */
 
-	@PatchMapping("/updateEmail")
+	@PatchMapping("/email")
 	public ResponseEntity<ResponseStructure<Employee>> updateEmail(@RequestParam Integer id,
 			@RequestParam String email) {
 
@@ -90,7 +94,7 @@ public class EmployeeApi {
 
 	/* API-09 */
 
-	@PatchMapping("/updateSalary")
+	@PatchMapping("/salary")
 	public ResponseEntity<ResponseStructure<Employee>> updateSalary(@RequestParam Integer id,
 			@RequestParam Double salary) {
 
@@ -99,7 +103,7 @@ public class EmployeeApi {
 
 	/* API-10 */
 
-	@GetMapping("/fetchByPhone")
+	@GetMapping("/phone")
 	public ResponseEntity<ResponseStructure<Employee>> fetchByPhone(@RequestParam Long phone) {
 
 		return employeeService.fetchByPhone(phone);
@@ -107,7 +111,7 @@ public class EmployeeApi {
 
 	/* API-11 */
 
-	@GetMapping("/getByEmail")
+	@GetMapping("/email")
 	public ResponseEntity<ResponseStructure<Employee>> getByEmail(@RequestParam String email) {
 
 		return employeeService.getByEmail(email);
@@ -115,7 +119,7 @@ public class EmployeeApi {
 
 	/* API-12 */
 
-	@GetMapping("/fetchByAddress")
+	@GetMapping("/address")
 	public ResponseEntity<ResponseStructure<List<Employee>>> fetchByAddress(@RequestParam String address) {
 
 		return employeeService.fetchByAddress(address);
@@ -123,7 +127,7 @@ public class EmployeeApi {
 
 	/* API-13 */
 
-	@GetMapping("/fetchByName")
+	@GetMapping("/name")
 	public ResponseEntity<ResponseStructure<List<Employee>>> fetchByName(@RequestParam String name) {
 
 		return employeeService.fetchByName(name);
@@ -131,7 +135,7 @@ public class EmployeeApi {
 
 	/* API-14 */
 
-	@GetMapping("/fetchBySalary")
+	@GetMapping("/salary")
 	public ResponseEntity<ResponseStructure<List<Employee>>> fetchBySalary(@RequestParam Double salary) {
 
 		return employeeService.fetchBySalary(salary);
@@ -139,7 +143,7 @@ public class EmployeeApi {
 
 	/* API-15 */
 
-	@GetMapping("/salLessThan")
+	@GetMapping("/less-than-salary")
 	public ResponseEntity<ResponseStructure<List<Employee>>> salLessThan(@RequestParam Double salary) {
 
 		return employeeService.salLessThan(salary);
@@ -147,7 +151,7 @@ public class EmployeeApi {
 
 	/* API-16 */
 
-	@GetMapping("/salBetween")
+	@GetMapping("/salary-range")
 	public ResponseEntity<ResponseStructure<List<Employee>>> salBetween(@RequestParam Double lowSalary,
 			@RequestParam Double highSalary) {
 
@@ -156,7 +160,7 @@ public class EmployeeApi {
 
 	/* API-17 */
 
-	@GetMapping("/fetchByGrade")
+	@GetMapping("/grade")
 	public ResponseEntity<ResponseStructure<List<Employee>>> fetchByGrade(@RequestParam Character grade) {
 
 		return employeeService.fetchByGrade(grade);
