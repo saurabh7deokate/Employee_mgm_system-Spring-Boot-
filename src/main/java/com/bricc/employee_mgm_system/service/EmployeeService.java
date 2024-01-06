@@ -25,7 +25,7 @@ public class EmployeeService {
 
 	}
 
-	public static void saveGarde(Employee employee) {
+	public static void saveGrade(Employee employee) {
 		Double salary = employee.getSalary();
 		Character grade = (salary < 10000) ? 'D' : (salary < 20000) ? 'C' : (salary < 40000) ? 'B' : 'A';
 		employee.setGrade(grade);
@@ -33,7 +33,7 @@ public class EmployeeService {
 
 	public ResponseEntity<ResponseStructure<Employee>> saveEmployee(Employee employee) {
 
-		EmployeeService.saveGarde(employee);
+		EmployeeService.saveGrade(employee);
 		return setResponse("Data Saved Successfully", HttpStatus.CREATED, employeeDao.saveEmployee(employee));
 	}
 
