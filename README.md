@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Employee Management System - Spring Boot
 
 ## Overview
@@ -47,3 +48,6 @@ curl -X DELETE http://localhost:8080/delete/1
 curl http://localhost:8080/fetchAll
 
 -- Contributions are welcome! If you find a bug or have a feature request, please open an issue.
+=======
+
+>>>>>>> responsestructure
