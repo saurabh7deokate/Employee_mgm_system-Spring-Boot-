@@ -17,7 +17,7 @@ This is a simple Employee Management System built using the Spring Boot framewor
 - Maven
 
 ## Getting Started
-1. Clone the repository: `git clone https://github.com/Saurabh7deokate/Employee_mgm_system-Spring-Boot-.git`
+1. Clone the repository: `git clone https://github.com/saurabh7deokate/Employee_mgm_system-Spring-Boot-.git`
 2. Navigate to the project directory: `cd employee-mgm-system`
 3. Configure the database connection in `src/main/resources/application.properties`.
 4. Run the application: `mvn spring-boot:run`
